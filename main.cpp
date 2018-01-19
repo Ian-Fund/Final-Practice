@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
+
 using namespace std;
 
 string get_str_between_two_str(const string &s,const string &begin, const string &end);
@@ -19,9 +21,30 @@ int main() {
 
 
     char ch;
+    string placeHolder= "";
+    stringstream ss;
 
-    while (ifs >> noskipws >> ch) {
-        cout << ch<< endl; // Or whatever
+    string array[5];
+    int x = 0;
+        while (ifs >> noskipws >> ch) {
+            if (ch == '{') {
+                placeHolder= ch+=1;
+            }
+            else if(ch =='}'){
+                array[x]=placeHolder;
+
+                x++;
+            }
+            else {
+               // cout <<placeHolder <<endl;
+
+                placeHolder+=ch;
+                cout << placeHolder << endl; // Or whatever
+            }
+        }
+    cout<<"============="<<endl;
+    for (int i = 0; i < 5; ++i) {
+        cout<< array[i]<<endl;
     }
 
 //    for (int i = 0; i <  ifs.get(); ++i) {
