@@ -1,81 +1,102 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <sstream>
+#include <algorithm>
 
 using namespace std;
 
-string get_str_between_two_str(const string &s,const string &begin, const string &end);
+
+void readFile(string &array, string input);
+void removeDups(string &array);
 
 int main() {
 
     string input = "input1.txt";
+    string array[5];
+
+    char ch;
+    string placeHolder= "";
     ifstream ifs(input.c_str(),fstream::in);
     if (!ifs.is_open()){
         cerr<<"Unable to open " << input <<endl;
         exit(1);
     }
-    char begin = '{';
-    string end = "}";
 
 
 
-    char ch;
-    string placeHolder= "";
-    stringstream ss;
-
-    string array[5];
     int x = 0;
-        while (ifs >> noskipws >> ch) {
-            if (ch == '{') {
-                placeHolder= ch+=1;
-            }
-            else if(ch =='}'){
-                array[x]=placeHolder;
-
-                x++;
-            }
-            else {
-               // cout <<placeHolder <<endl;
-
-                placeHolder+=ch;
-                cout << placeHolder << endl; // Or whatever
-            }
+    while (ifs >> skipws >> ch) {
+        if (ch == '{') {
+            placeHolder="";
         }
-    cout<<"============="<<endl;
-    for (int i = 0; i < 5; ++i) {
-        cout<< array[i]<<endl;
+        else if(ch =='}'){
+            array[x]=placeHolder;
+
+            x++;
+        }
+        else {
+            placeHolder+=ch;
+
+        }
     }
 
-//    for (int i = 0; i <  ifs.get(); ++i) {
-//        while (c != '{') {
-//            cout << c;
-//
-//        }
-//        while (ifs.get()) {
-//            cout << c;
-//
-//        }
-//    }
 
 
 
-    string spaces = "";
-//
-//    while (!ifs.eof()){
-//        getline(ifs, spaces);
-//        cout<<get_str_between_two_str(spaces,begin,end)<<endl;
-//        //cout<<spaces<<endl;
-//    }
+
+
+
+
+
 
 
     return 0;
 }
 
-string get_str_between_two_str(const string &s,const string &begin, const string &end) {
-    int first_delim_pos = s.find(begin);
-    int end_pos_of_first_delim = first_delim_pos + begin.length();
-    int last_delim_pos = s.find_first_of(end, end_pos_of_first_delim);
 
-    return s.substr(end_pos_of_first_delim,last_delim_pos - end_pos_of_first_delim);
+
+void readFile(string &array, string input){
+
+
+    char ch;
+    string placeHolder= "";
+    ifstream ifs(input.c_str(),fstream::in);
+    if (!ifs.is_open()){
+        cerr<<"Unable to open " << input <<endl;
+        exit(1);
+    }
+
+
+
+    int x = 0;
+    while (ifs >> skipws >> ch) {
+        if (ch == '{') {
+            placeHolder="";
+        }
+        else if(ch =='}'){
+            array[x]=placeHolder;
+
+            x++;
+        }
+        else {
+            placeHolder+=ch;
+
+        }
+    }
+
+
+
+
+
+void removeDups(string &array){
+    for (int i = 0; i < 10000; i++){
+        for (int j = i + 1; j < 10000; j++)
+        {
+            if (array[i] == array[j])
+            {
+                array[j]= array[j+1];
+            }
+        }
+    }
+
 }
